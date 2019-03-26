@@ -1,0 +1,1747 @@
+Terminals unused in grammar
+
+   "newline"
+   CHAR
+
+
+State 85 conflicts: 2 shift/reduce
+State 102 conflicts: 2 shift/reduce
+
+
+Grammar
+
+    0 $accept: program "end of file"
+
+    1 program: declList
+
+    2 declList: declList decl
+    3         | %empty
+
+    4 decl: varDecl
+    5     | structDecl
+    6     | fnDecl
+
+    7 varDecl: type id SEMICOLON
+
+    8 structDecl: STRUCT id LCURLY structBody RCURLY SEMICOLON
+
+    9 structBody: structBody varDecl
+   10           | varDecl
+
+   11 fnDecl: type id formals fnBody
+
+   12 formals: LPAREN RPAREN
+   13        | LPAREN formalsList RPAREN
+
+   14 formalsList: formalDecl
+   15            | formalDecl COMMA formalsList
+
+   16 formalDecl: type id
+
+   17 fnBody: LCURLY varDeclList stmtList RCURLY
+
+   18 varDeclList: varDeclList varDecl
+   19            | %empty
+
+   20 stmtList: stmtList stmt
+   21         | %empty
+
+   22 stmt: assignExp SEMICOLON
+   23     | loc PLUSPLUS SEMICOLON
+   24     | loc MINUSMINUS SEMICOLON
+   25     | INPUT READ loc SEMICOLON
+   26     | OUTPUT WRITE exp SEMICOLON
+   27     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   29     | WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+   30     | RETURN exp SEMICOLON
+   31     | RETURN SEMICOLON
+   32     | fncall SEMICOLON
+
+   33 assignExp: loc ASSIGN exp
+
+   34 loc: id
+   35    | loc DOT id
+
+   36 exp: assignExp
+   37    | exp PLUS expt
+   38    | exp MINUS expt
+   39    | expt
+   40    | NOT exp
+   41    | term AND term
+   42    | term OR term
+   43    | term EQUALS term
+   44    | term NOTEQUALS term
+   45    | term LESS term
+   46    | term GREATER term
+   47    | term LESSEQ term
+   48    | term GREATEREQ term
+
+   49 expt: expt TIMES expf
+   50     | expt DIVIDE expf
+   51     | expf
+
+   52 expf: term
+   53     | MINUS term
+
+   54 term: loc
+   55     | INTLITERAL
+   56     | STRINGLITERAL
+   57     | TRUE
+   58     | FALSE
+   59     | LPAREN exp RPAREN
+   60     | fncall
+
+   61 fncall: id LPAREN RPAREN
+   62       | id LPAREN actualList RPAREN
+
+   63 actualList: exp
+   64           | actualList COMMA exp
+
+   65 type: INT
+   66     | BOOL
+   67     | VOID
+
+   68 id: ID
+
+
+Terminals, with rules where they appear
+
+"end of file" (0) 0
+error (256)
+"newline" (258)
+CHAR (259)
+BOOL (260) 66
+INT (261) 65
+VOID (262) 67
+TRUE (263) 57
+FALSE (264) 58
+STRUCT (265) 8
+INPUT (266) 25
+OUTPUT (267) 26
+IF (268) 27 28
+ELSE (269) 27
+WHILE (270) 29
+RETURN (271) 30 31
+ID (272) 68
+INTLITERAL (273) 55
+STRINGLITERAL (274) 56
+LCURLY (275) 8 17 27 28 29
+RCURLY (276) 8 17 27 28 29
+LPAREN (277) 12 13 27 28 29 59 61 62
+RPAREN (278) 12 13 27 28 29 59 61 62
+SEMICOLON (279) 7 8 22 23 24 25 26 30 31 32
+COMMA (280) 15 64
+DOT (281) 35
+WRITE (282) 26
+READ (283) 25
+PLUSPLUS (284) 23
+MINUSMINUS (285) 24
+PLUS (286) 37
+MINUS (287) 38 53
+TIMES (288) 49
+DIVIDE (289) 50
+NOT (290) 40
+AND (291) 41
+OR (292) 42
+EQUALS (293) 43
+NOTEQUALS (294) 44
+LESS (295) 45
+GREATER (296) 46
+LESSEQ (297) 47
+GREATEREQ (298) 48
+ASSIGN (299) 33
+
+
+Nonterminals, with rules where they appear
+
+$accept (45)
+    on left: 0
+program (46)
+    on left: 1, on right: 0
+declList (47)
+    on left: 2 3, on right: 1 2
+decl (48)
+    on left: 4 5 6, on right: 2
+varDecl (49)
+    on left: 7, on right: 4 9 10 18
+structDecl (50)
+    on left: 8, on right: 5
+structBody (51)
+    on left: 9 10, on right: 8 9
+fnDecl (52)
+    on left: 11, on right: 6
+formals (53)
+    on left: 12 13, on right: 11
+formalsList (54)
+    on left: 14 15, on right: 13 15
+formalDecl (55)
+    on left: 16, on right: 14 15
+fnBody (56)
+    on left: 17, on right: 11
+varDeclList (57)
+    on left: 18 19, on right: 17 18 27 28 29
+stmtList (58)
+    on left: 20 21, on right: 17 20 27 28 29
+stmt (59)
+    on left: 22 23 24 25 26 27 28 29 30 31 32, on right: 20
+assignExp (60)
+    on left: 33, on right: 22 36
+loc (61)
+    on left: 34 35, on right: 23 24 25 33 35 54
+exp (62)
+    on left: 36 37 38 39 40 41 42 43 44 45 46 47 48, on right: 26 27
+    28 29 30 33 37 38 40 59 63 64
+expt (63)
+    on left: 49 50 51, on right: 37 38 39 49 50
+expf (64)
+    on left: 52 53, on right: 49 50 51
+term (65)
+    on left: 54 55 56 57 58 59 60, on right: 41 42 43 44 45 46 47 48
+    52 53
+fncall (66)
+    on left: 61 62, on right: 32 60
+actualList (67)
+    on left: 63 64, on right: 62 64
+type (68)
+    on left: 65 66 67, on right: 7 11 16
+id (69)
+    on left: 68, on right: 7 8 11 16 34 35 61 62
+
+
+State 0
+
+    0 $accept: . program "end of file"
+
+    $default  reduce using rule 3 (declList)
+
+    program   go to state 1
+    declList  go to state 2
+
+
+State 1
+
+    0 $accept: program . "end of file"
+
+    "end of file"  shift, and go to state 3
+
+
+State 2
+
+    1 program: declList .
+    2 declList: declList . decl
+
+    BOOL    shift, and go to state 4
+    INT     shift, and go to state 5
+    VOID    shift, and go to state 6
+    STRUCT  shift, and go to state 7
+
+    $default  reduce using rule 1 (program)
+
+    decl        go to state 8
+    varDecl     go to state 9
+    structDecl  go to state 10
+    fnDecl      go to state 11
+    type        go to state 12
+
+
+State 3
+
+    0 $accept: program "end of file" .
+
+    $default  accept
+
+
+State 4
+
+   66 type: BOOL .
+
+    $default  reduce using rule 66 (type)
+
+
+State 5
+
+   65 type: INT .
+
+    $default  reduce using rule 65 (type)
+
+
+State 6
+
+   67 type: VOID .
+
+    $default  reduce using rule 67 (type)
+
+
+State 7
+
+    8 structDecl: STRUCT . id LCURLY structBody RCURLY SEMICOLON
+
+    ID  shift, and go to state 13
+
+    id  go to state 14
+
+
+State 8
+
+    2 declList: declList decl .
+
+    $default  reduce using rule 2 (declList)
+
+
+State 9
+
+    4 decl: varDecl .
+
+    $default  reduce using rule 4 (decl)
+
+
+State 10
+
+    5 decl: structDecl .
+
+    $default  reduce using rule 5 (decl)
+
+
+State 11
+
+    6 decl: fnDecl .
+
+    $default  reduce using rule 6 (decl)
+
+
+State 12
+
+    7 varDecl: type . id SEMICOLON
+   11 fnDecl: type . id formals fnBody
+
+    ID  shift, and go to state 13
+
+    id  go to state 15
+
+
+State 13
+
+   68 id: ID .
+
+    $default  reduce using rule 68 (id)
+
+
+State 14
+
+    8 structDecl: STRUCT id . LCURLY structBody RCURLY SEMICOLON
+
+    LCURLY  shift, and go to state 16
+
+
+State 15
+
+    7 varDecl: type id . SEMICOLON
+   11 fnDecl: type id . formals fnBody
+
+    LPAREN     shift, and go to state 17
+    SEMICOLON  shift, and go to state 18
+
+    formals  go to state 19
+
+
+State 16
+
+    8 structDecl: STRUCT id LCURLY . structBody RCURLY SEMICOLON
+
+    BOOL  shift, and go to state 4
+    INT   shift, and go to state 5
+    VOID  shift, and go to state 6
+
+    varDecl     go to state 20
+    structBody  go to state 21
+    type        go to state 22
+
+
+State 17
+
+   12 formals: LPAREN . RPAREN
+   13        | LPAREN . formalsList RPAREN
+
+    BOOL    shift, and go to state 4
+    INT     shift, and go to state 5
+    VOID    shift, and go to state 6
+    RPAREN  shift, and go to state 23
+
+    formalsList  go to state 24
+    formalDecl   go to state 25
+    type         go to state 26
+
+
+State 18
+
+    7 varDecl: type id SEMICOLON .
+
+    $default  reduce using rule 7 (varDecl)
+
+
+State 19
+
+   11 fnDecl: type id formals . fnBody
+
+    LCURLY  shift, and go to state 27
+
+    fnBody  go to state 28
+
+
+State 20
+
+   10 structBody: varDecl .
+
+    $default  reduce using rule 10 (structBody)
+
+
+State 21
+
+    8 structDecl: STRUCT id LCURLY structBody . RCURLY SEMICOLON
+    9 structBody: structBody . varDecl
+
+    BOOL    shift, and go to state 4
+    INT     shift, and go to state 5
+    VOID    shift, and go to state 6
+    RCURLY  shift, and go to state 29
+
+    varDecl  go to state 30
+    type     go to state 22
+
+
+State 22
+
+    7 varDecl: type . id SEMICOLON
+
+    ID  shift, and go to state 13
+
+    id  go to state 31
+
+
+State 23
+
+   12 formals: LPAREN RPAREN .
+
+    $default  reduce using rule 12 (formals)
+
+
+State 24
+
+   13 formals: LPAREN formalsList . RPAREN
+
+    RPAREN  shift, and go to state 32
+
+
+State 25
+
+   14 formalsList: formalDecl .
+   15            | formalDecl . COMMA formalsList
+
+    COMMA  shift, and go to state 33
+
+    $default  reduce using rule 14 (formalsList)
+
+
+State 26
+
+   16 formalDecl: type . id
+
+    ID  shift, and go to state 13
+
+    id  go to state 34
+
+
+State 27
+
+   17 fnBody: LCURLY . varDeclList stmtList RCURLY
+
+    $default  reduce using rule 19 (varDeclList)
+
+    varDeclList  go to state 35
+
+
+State 28
+
+   11 fnDecl: type id formals fnBody .
+
+    $default  reduce using rule 11 (fnDecl)
+
+
+State 29
+
+    8 structDecl: STRUCT id LCURLY structBody RCURLY . SEMICOLON
+
+    SEMICOLON  shift, and go to state 36
+
+
+State 30
+
+    9 structBody: structBody varDecl .
+
+    $default  reduce using rule 9 (structBody)
+
+
+State 31
+
+    7 varDecl: type id . SEMICOLON
+
+    SEMICOLON  shift, and go to state 18
+
+
+State 32
+
+   13 formals: LPAREN formalsList RPAREN .
+
+    $default  reduce using rule 13 (formals)
+
+
+State 33
+
+   15 formalsList: formalDecl COMMA . formalsList
+
+    BOOL  shift, and go to state 4
+    INT   shift, and go to state 5
+    VOID  shift, and go to state 6
+
+    formalsList  go to state 37
+    formalDecl   go to state 25
+    type         go to state 26
+
+
+State 34
+
+   16 formalDecl: type id .
+
+    $default  reduce using rule 16 (formalDecl)
+
+
+State 35
+
+   17 fnBody: LCURLY varDeclList . stmtList RCURLY
+   18 varDeclList: varDeclList . varDecl
+
+    BOOL  shift, and go to state 4
+    INT   shift, and go to state 5
+    VOID  shift, and go to state 6
+
+    $default  reduce using rule 21 (stmtList)
+
+    varDecl   go to state 38
+    stmtList  go to state 39
+    type      go to state 22
+
+
+State 36
+
+    8 structDecl: STRUCT id LCURLY structBody RCURLY SEMICOLON .
+
+    $default  reduce using rule 8 (structDecl)
+
+
+State 37
+
+   15 formalsList: formalDecl COMMA formalsList .
+
+    $default  reduce using rule 15 (formalsList)
+
+
+State 38
+
+   18 varDeclList: varDeclList varDecl .
+
+    $default  reduce using rule 18 (varDeclList)
+
+
+State 39
+
+   17 fnBody: LCURLY varDeclList stmtList . RCURLY
+   20 stmtList: stmtList . stmt
+
+    INPUT   shift, and go to state 40
+    OUTPUT  shift, and go to state 41
+    IF      shift, and go to state 42
+    WHILE   shift, and go to state 43
+    RETURN  shift, and go to state 44
+    ID      shift, and go to state 13
+    RCURLY  shift, and go to state 45
+
+    stmt       go to state 46
+    assignExp  go to state 47
+    loc        go to state 48
+    fncall     go to state 49
+    id         go to state 50
+
+
+State 40
+
+   25 stmt: INPUT . READ loc SEMICOLON
+
+    READ  shift, and go to state 51
+
+
+State 41
+
+   26 stmt: OUTPUT . WRITE exp SEMICOLON
+
+    WRITE  shift, and go to state 52
+
+
+State 42
+
+   27 stmt: IF . LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF . LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+
+    LPAREN  shift, and go to state 53
+
+
+State 43
+
+   29 stmt: WHILE . LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY
+
+    LPAREN  shift, and go to state 54
+
+
+State 44
+
+   30 stmt: RETURN . exp SEMICOLON
+   31     | RETURN . SEMICOLON
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    SEMICOLON      shift, and go to state 60
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 65
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 45
+
+   17 fnBody: LCURLY varDeclList stmtList RCURLY .
+
+    $default  reduce using rule 17 (fnBody)
+
+
+State 46
+
+   20 stmtList: stmtList stmt .
+
+    $default  reduce using rule 20 (stmtList)
+
+
+State 47
+
+   22 stmt: assignExp . SEMICOLON
+
+    SEMICOLON  shift, and go to state 70
+
+
+State 48
+
+   23 stmt: loc . PLUSPLUS SEMICOLON
+   24     | loc . MINUSMINUS SEMICOLON
+   33 assignExp: loc . ASSIGN exp
+   35 loc: loc . DOT id
+
+    DOT         shift, and go to state 71
+    PLUSPLUS    shift, and go to state 72
+    MINUSMINUS  shift, and go to state 73
+    ASSIGN      shift, and go to state 74
+
+
+State 49
+
+   32 stmt: fncall . SEMICOLON
+
+    SEMICOLON  shift, and go to state 75
+
+
+State 50
+
+   34 loc: id .
+   61 fncall: id . LPAREN RPAREN
+   62       | id . LPAREN actualList RPAREN
+
+    LPAREN  shift, and go to state 76
+
+    $default  reduce using rule 34 (loc)
+
+
+State 51
+
+   25 stmt: INPUT READ . loc SEMICOLON
+
+    ID  shift, and go to state 13
+
+    loc  go to state 77
+    id   go to state 78
+
+
+State 52
+
+   26 stmt: OUTPUT WRITE . exp SEMICOLON
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 79
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 53
+
+   27 stmt: IF LPAREN . exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN . exp RPAREN LCURLY varDeclList stmtList RCURLY
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 80
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 54
+
+   29 stmt: WHILE LPAREN . exp RPAREN LCURLY varDeclList stmtList RCURLY
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 81
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 55
+
+   57 term: TRUE .
+
+    $default  reduce using rule 57 (term)
+
+
+State 56
+
+   58 term: FALSE .
+
+    $default  reduce using rule 58 (term)
+
+
+State 57
+
+   55 term: INTLITERAL .
+
+    $default  reduce using rule 55 (term)
+
+
+State 58
+
+   56 term: STRINGLITERAL .
+
+    $default  reduce using rule 56 (term)
+
+
+State 59
+
+   59 term: LPAREN . exp RPAREN
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 82
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 60
+
+   31 stmt: RETURN SEMICOLON .
+
+    $default  reduce using rule 31 (stmt)
+
+
+State 61
+
+   53 expf: MINUS . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 84
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 62
+
+   40 exp: NOT . exp
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 85
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 63
+
+   36 exp: assignExp .
+
+    $default  reduce using rule 36 (exp)
+
+
+State 64
+
+   33 assignExp: loc . ASSIGN exp
+   35 loc: loc . DOT id
+   54 term: loc .
+
+    DOT     shift, and go to state 71
+    ASSIGN  shift, and go to state 74
+
+    $default  reduce using rule 54 (term)
+
+
+State 65
+
+   30 stmt: RETURN exp . SEMICOLON
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+
+    SEMICOLON  shift, and go to state 86
+    PLUS       shift, and go to state 87
+    MINUS      shift, and go to state 88
+
+
+State 66
+
+   39 exp: expt .
+   49 expt: expt . TIMES expf
+   50     | expt . DIVIDE expf
+
+    TIMES   shift, and go to state 89
+    DIVIDE  shift, and go to state 90
+
+    $default  reduce using rule 39 (exp)
+
+
+State 67
+
+   51 expt: expf .
+
+    $default  reduce using rule 51 (expt)
+
+
+State 68
+
+   41 exp: term . AND term
+   42    | term . OR term
+   43    | term . EQUALS term
+   44    | term . NOTEQUALS term
+   45    | term . LESS term
+   46    | term . GREATER term
+   47    | term . LESSEQ term
+   48    | term . GREATEREQ term
+   52 expf: term .
+
+    AND        shift, and go to state 91
+    OR         shift, and go to state 92
+    EQUALS     shift, and go to state 93
+    NOTEQUALS  shift, and go to state 94
+    LESS       shift, and go to state 95
+    GREATER    shift, and go to state 96
+    LESSEQ     shift, and go to state 97
+    GREATEREQ  shift, and go to state 98
+
+    $default  reduce using rule 52 (expf)
+
+
+State 69
+
+   60 term: fncall .
+
+    $default  reduce using rule 60 (term)
+
+
+State 70
+
+   22 stmt: assignExp SEMICOLON .
+
+    $default  reduce using rule 22 (stmt)
+
+
+State 71
+
+   35 loc: loc DOT . id
+
+    ID  shift, and go to state 13
+
+    id  go to state 99
+
+
+State 72
+
+   23 stmt: loc PLUSPLUS . SEMICOLON
+
+    SEMICOLON  shift, and go to state 100
+
+
+State 73
+
+   24 stmt: loc MINUSMINUS . SEMICOLON
+
+    SEMICOLON  shift, and go to state 101
+
+
+State 74
+
+   33 assignExp: loc ASSIGN . exp
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 102
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 75
+
+   32 stmt: fncall SEMICOLON .
+
+    $default  reduce using rule 32 (stmt)
+
+
+State 76
+
+   61 fncall: id LPAREN . RPAREN
+   62       | id LPAREN . actualList RPAREN
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    RPAREN         shift, and go to state 103
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp   go to state 63
+    loc         go to state 64
+    exp         go to state 104
+    expt        go to state 66
+    expf        go to state 67
+    term        go to state 68
+    fncall      go to state 69
+    actualList  go to state 105
+    id          go to state 50
+
+
+State 77
+
+   25 stmt: INPUT READ loc . SEMICOLON
+   35 loc: loc . DOT id
+
+    SEMICOLON  shift, and go to state 106
+    DOT        shift, and go to state 71
+
+
+State 78
+
+   34 loc: id .
+
+    $default  reduce using rule 34 (loc)
+
+
+State 79
+
+   26 stmt: OUTPUT WRITE exp . SEMICOLON
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+
+    SEMICOLON  shift, and go to state 107
+    PLUS       shift, and go to state 87
+    MINUS      shift, and go to state 88
+
+
+State 80
+
+   27 stmt: IF LPAREN exp . RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp . RPAREN LCURLY varDeclList stmtList RCURLY
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+
+    RPAREN  shift, and go to state 108
+    PLUS    shift, and go to state 87
+    MINUS   shift, and go to state 88
+
+
+State 81
+
+   29 stmt: WHILE LPAREN exp . RPAREN LCURLY varDeclList stmtList RCURLY
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+
+    RPAREN  shift, and go to state 109
+    PLUS    shift, and go to state 87
+    MINUS   shift, and go to state 88
+
+
+State 82
+
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+   59 term: LPAREN exp . RPAREN
+
+    RPAREN  shift, and go to state 110
+    PLUS    shift, and go to state 87
+    MINUS   shift, and go to state 88
+
+
+State 83
+
+   35 loc: loc . DOT id
+   54 term: loc .
+
+    DOT  shift, and go to state 71
+
+    $default  reduce using rule 54 (term)
+
+
+State 84
+
+   53 expf: MINUS term .
+
+    $default  reduce using rule 53 (expf)
+
+
+State 85
+
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+   40    | NOT exp .
+
+    PLUS   shift, and go to state 87
+    MINUS  shift, and go to state 88
+
+    PLUS      [reduce using rule 40 (exp)]
+    MINUS     [reduce using rule 40 (exp)]
+    $default  reduce using rule 40 (exp)
+
+
+State 86
+
+   30 stmt: RETURN exp SEMICOLON .
+
+    $default  reduce using rule 30 (stmt)
+
+
+State 87
+
+   37 exp: exp PLUS . expt
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+
+    loc     go to state 83
+    expt    go to state 111
+    expf    go to state 67
+    term    go to state 112
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 88
+
+   38 exp: exp MINUS . expt
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+
+    loc     go to state 83
+    expt    go to state 113
+    expf    go to state 67
+    term    go to state 112
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 89
+
+   49 expt: expt TIMES . expf
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+
+    loc     go to state 83
+    expf    go to state 114
+    term    go to state 112
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 90
+
+   50 expt: expt DIVIDE . expf
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+
+    loc     go to state 83
+    expf    go to state 115
+    term    go to state 112
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 91
+
+   41 exp: term AND . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 116
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 92
+
+   42 exp: term OR . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 117
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 93
+
+   43 exp: term EQUALS . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 118
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 94
+
+   44 exp: term NOTEQUALS . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 119
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 95
+
+   45 exp: term LESS . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 120
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 96
+
+   46 exp: term GREATER . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 121
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 97
+
+   47 exp: term LESSEQ . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 122
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 98
+
+   48 exp: term GREATEREQ . term
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+
+    loc     go to state 83
+    term    go to state 123
+    fncall  go to state 69
+    id      go to state 50
+
+
+State 99
+
+   35 loc: loc DOT id .
+
+    $default  reduce using rule 35 (loc)
+
+
+State 100
+
+   23 stmt: loc PLUSPLUS SEMICOLON .
+
+    $default  reduce using rule 23 (stmt)
+
+
+State 101
+
+   24 stmt: loc MINUSMINUS SEMICOLON .
+
+    $default  reduce using rule 24 (stmt)
+
+
+State 102
+
+   33 assignExp: loc ASSIGN exp .
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+
+    PLUS   shift, and go to state 87
+    MINUS  shift, and go to state 88
+
+    PLUS      [reduce using rule 33 (assignExp)]
+    MINUS     [reduce using rule 33 (assignExp)]
+    $default  reduce using rule 33 (assignExp)
+
+
+State 103
+
+   61 fncall: id LPAREN RPAREN .
+
+    $default  reduce using rule 61 (fncall)
+
+
+State 104
+
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+   63 actualList: exp .
+
+    PLUS   shift, and go to state 87
+    MINUS  shift, and go to state 88
+
+    $default  reduce using rule 63 (actualList)
+
+
+State 105
+
+   62 fncall: id LPAREN actualList . RPAREN
+   64 actualList: actualList . COMMA exp
+
+    RPAREN  shift, and go to state 124
+    COMMA   shift, and go to state 125
+
+
+State 106
+
+   25 stmt: INPUT READ loc SEMICOLON .
+
+    $default  reduce using rule 25 (stmt)
+
+
+State 107
+
+   26 stmt: OUTPUT WRITE exp SEMICOLON .
+
+    $default  reduce using rule 26 (stmt)
+
+
+State 108
+
+   27 stmt: IF LPAREN exp RPAREN . LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp RPAREN . LCURLY varDeclList stmtList RCURLY
+
+    LCURLY  shift, and go to state 126
+
+
+State 109
+
+   29 stmt: WHILE LPAREN exp RPAREN . LCURLY varDeclList stmtList RCURLY
+
+    LCURLY  shift, and go to state 127
+
+
+State 110
+
+   59 term: LPAREN exp RPAREN .
+
+    $default  reduce using rule 59 (term)
+
+
+State 111
+
+   37 exp: exp PLUS expt .
+   49 expt: expt . TIMES expf
+   50     | expt . DIVIDE expf
+
+    TIMES   shift, and go to state 89
+    DIVIDE  shift, and go to state 90
+
+    $default  reduce using rule 37 (exp)
+
+
+State 112
+
+   52 expf: term .
+
+    $default  reduce using rule 52 (expf)
+
+
+State 113
+
+   38 exp: exp MINUS expt .
+   49 expt: expt . TIMES expf
+   50     | expt . DIVIDE expf
+
+    TIMES   shift, and go to state 89
+    DIVIDE  shift, and go to state 90
+
+    $default  reduce using rule 38 (exp)
+
+
+State 114
+
+   49 expt: expt TIMES expf .
+
+    $default  reduce using rule 49 (expt)
+
+
+State 115
+
+   50 expt: expt DIVIDE expf .
+
+    $default  reduce using rule 50 (expt)
+
+
+State 116
+
+   41 exp: term AND term .
+
+    $default  reduce using rule 41 (exp)
+
+
+State 117
+
+   42 exp: term OR term .
+
+    $default  reduce using rule 42 (exp)
+
+
+State 118
+
+   43 exp: term EQUALS term .
+
+    $default  reduce using rule 43 (exp)
+
+
+State 119
+
+   44 exp: term NOTEQUALS term .
+
+    $default  reduce using rule 44 (exp)
+
+
+State 120
+
+   45 exp: term LESS term .
+
+    $default  reduce using rule 45 (exp)
+
+
+State 121
+
+   46 exp: term GREATER term .
+
+    $default  reduce using rule 46 (exp)
+
+
+State 122
+
+   47 exp: term LESSEQ term .
+
+    $default  reduce using rule 47 (exp)
+
+
+State 123
+
+   48 exp: term GREATEREQ term .
+
+    $default  reduce using rule 48 (exp)
+
+
+State 124
+
+   62 fncall: id LPAREN actualList RPAREN .
+
+    $default  reduce using rule 62 (fncall)
+
+
+State 125
+
+   64 actualList: actualList COMMA . exp
+
+    TRUE           shift, and go to state 55
+    FALSE          shift, and go to state 56
+    ID             shift, and go to state 13
+    INTLITERAL     shift, and go to state 57
+    STRINGLITERAL  shift, and go to state 58
+    LPAREN         shift, and go to state 59
+    MINUS          shift, and go to state 61
+    NOT            shift, and go to state 62
+
+    assignExp  go to state 63
+    loc        go to state 64
+    exp        go to state 128
+    expt       go to state 66
+    expf       go to state 67
+    term       go to state 68
+    fncall     go to state 69
+    id         go to state 50
+
+
+State 126
+
+   27 stmt: IF LPAREN exp RPAREN LCURLY . varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp RPAREN LCURLY . varDeclList stmtList RCURLY
+
+    $default  reduce using rule 19 (varDeclList)
+
+    varDeclList  go to state 129
+
+
+State 127
+
+   29 stmt: WHILE LPAREN exp RPAREN LCURLY . varDeclList stmtList RCURLY
+
+    $default  reduce using rule 19 (varDeclList)
+
+    varDeclList  go to state 130
+
+
+State 128
+
+   37 exp: exp . PLUS expt
+   38    | exp . MINUS expt
+   64 actualList: actualList COMMA exp .
+
+    PLUS   shift, and go to state 87
+    MINUS  shift, and go to state 88
+
+    $default  reduce using rule 64 (actualList)
+
+
+State 129
+
+   18 varDeclList: varDeclList . varDecl
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList . stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp RPAREN LCURLY varDeclList . stmtList RCURLY
+
+    BOOL  shift, and go to state 4
+    INT   shift, and go to state 5
+    VOID  shift, and go to state 6
+
+    $default  reduce using rule 21 (stmtList)
+
+    varDecl   go to state 38
+    stmtList  go to state 131
+    type      go to state 22
+
+
+State 130
+
+   18 varDeclList: varDeclList . varDecl
+   29 stmt: WHILE LPAREN exp RPAREN LCURLY varDeclList . stmtList RCURLY
+
+    BOOL  shift, and go to state 4
+    INT   shift, and go to state 5
+    VOID  shift, and go to state 6
+
+    $default  reduce using rule 21 (stmtList)
+
+    varDecl   go to state 38
+    stmtList  go to state 132
+    type      go to state 22
+
+
+State 131
+
+   20 stmtList: stmtList . stmt
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList . RCURLY ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList . RCURLY
+
+    INPUT   shift, and go to state 40
+    OUTPUT  shift, and go to state 41
+    IF      shift, and go to state 42
+    WHILE   shift, and go to state 43
+    RETURN  shift, and go to state 44
+    ID      shift, and go to state 13
+    RCURLY  shift, and go to state 133
+
+    stmt       go to state 46
+    assignExp  go to state 47
+    loc        go to state 48
+    fncall     go to state 49
+    id         go to state 50
+
+
+State 132
+
+   20 stmtList: stmtList . stmt
+   29 stmt: WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList . RCURLY
+
+    INPUT   shift, and go to state 40
+    OUTPUT  shift, and go to state 41
+    IF      shift, and go to state 42
+    WHILE   shift, and go to state 43
+    RETURN  shift, and go to state 44
+    ID      shift, and go to state 13
+    RCURLY  shift, and go to state 134
+
+    stmt       go to state 46
+    assignExp  go to state 47
+    loc        go to state 48
+    fncall     go to state 49
+    id         go to state 50
+
+
+State 133
+
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY . ELSE LCURLY varDeclList stmtList RCURLY
+   28     | IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY .
+
+    ELSE  shift, and go to state 135
+
+    $default  reduce using rule 28 (stmt)
+
+
+State 134
+
+   29 stmt: WHILE LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY .
+
+    $default  reduce using rule 29 (stmt)
+
+
+State 135
+
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE . LCURLY varDeclList stmtList RCURLY
+
+    LCURLY  shift, and go to state 136
+
+
+State 136
+
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY . varDeclList stmtList RCURLY
+
+    $default  reduce using rule 19 (varDeclList)
+
+    varDeclList  go to state 137
+
+
+State 137
+
+   18 varDeclList: varDeclList . varDecl
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList . stmtList RCURLY
+
+    BOOL  shift, and go to state 4
+    INT   shift, and go to state 5
+    VOID  shift, and go to state 6
+
+    $default  reduce using rule 21 (stmtList)
+
+    varDecl   go to state 38
+    stmtList  go to state 138
+    type      go to state 22
+
+
+State 138
+
+   20 stmtList: stmtList . stmt
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList . RCURLY
+
+    INPUT   shift, and go to state 40
+    OUTPUT  shift, and go to state 41
+    IF      shift, and go to state 42
+    WHILE   shift, and go to state 43
+    RETURN  shift, and go to state 44
+    ID      shift, and go to state 13
+    RCURLY  shift, and go to state 139
+
+    stmt       go to state 46
+    assignExp  go to state 47
+    loc        go to state 48
+    fncall     go to state 49
+    id         go to state 50
+
+
+State 139
+
+   27 stmt: IF LPAREN exp RPAREN LCURLY varDeclList stmtList RCURLY ELSE LCURLY varDeclList stmtList RCURLY .
+
+    $default  reduce using rule 27 (stmt)
